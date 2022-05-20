@@ -4,17 +4,35 @@
   connection: local 
 
   tasks:
-  - name: Check iLO status
-    uri:
-      url: https://192.168.155.9/redfish/v1/SessionService/Sessions/
-      method: GET
-      body_format: json
-      force_basic_auth: yes
-      user: admin
-      password: redhat123
-      validate_certs: no
-      headers:
-        Content-Type: "application/json"
-    register: "output"
+  - name: Create a new file with permissions
+    file:
+      path: "/power_check.sh"
+      state: touch
+      mode: 0755
+      
+  - name: Copy script content to 
+    copy:
+      content: |
+#!/bin/bash
+#
+JSON_FILE=${0}.json
+xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://bmc1/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+echo $xauthtoken
+
+curl -v --insecure --silent \
+  -X GET \
+  -H 'X-Auth-Token: '$xauthtoken \
+  -L \
+  https://bmc1/redfish/v1/Systems/1 \
+  > $JSON_FILE        
+      dest: power_check.sh
+   
+  - name: "Read a file content"
+    shell: |
+      cat /power_check.sh
+    register: file_content
+
+  - name: "Print the file content to a console"
+    debug:
+      msg: "{{ file_content.stdout }}"
     
-  - debug: var=output.stdout_lines
