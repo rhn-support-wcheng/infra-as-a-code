@@ -7,7 +7,7 @@
   tasks:
   - name: create data.json
     copy:
-      contents: |
+      content: |
         {
           "UserName": "admin", 
     	    "Password": "redhat123" 
