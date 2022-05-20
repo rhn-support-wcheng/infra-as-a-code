@@ -5,13 +5,22 @@
   gather_facts: no
 
   tasks:
+  - name: create data.json
+    copy:
+      contents: |
+        {
+          "UserName": "admin", 
+    	    "Password": "redhat123"
+        }
+      dest: data.json
+
   - name: Copy script content to 
     copy:
       content: |
         #!/bin/bash
         #
         JSON_FILE=${0}.json
-        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data " {"UserName": "admin", "Password": "redhat123"}" https://192.168.155.9/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://192.168.155.9/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
         echo $xauthtoken
 
         curl -v --insecure --silent \
