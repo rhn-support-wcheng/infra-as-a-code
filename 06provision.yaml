@@ -31,7 +31,7 @@
          > provision.json
 
          #get the host id
-         id=$(cat provision.json | jq . | grep \"id\" | awk '{print $2}')
+         id=$(cat provision.json | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
          echo $id
 
          curl -v --insecure --silent \
