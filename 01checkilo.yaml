@@ -4,6 +4,20 @@
   connection: local 
 
   tasks:
+  - name: Create user and password file
+    file:
+      path: "data.json"
+      state: touch
+  
+  - name: copy username and password to  data.json
+    copy:
+      content: |
+        {
+    	      "UserName": "admin", 
+    	      "Password": "redhat123"
+        }
+    dest: data.json
+
   - name: Create a new file with permissions
     file:
       path: "power_check.sh"
@@ -26,10 +40,14 @@
         https://192.168.155.9/redfish/v1/Systems/1 \
         > $JSON_FILE        
       dest: "power_check.sh"
-   
+  
+  - name: Run the script 
+    ansible.builtin.script: 
+      cmd ./power_check.sh
+  
   - name: "Read a file content"
     shell: |
-      cat power_check.sh
+      cat power_check.json
     register: file_content
 
   - name: "Print the file content to a console"
