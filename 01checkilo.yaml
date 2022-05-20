@@ -42,8 +42,7 @@
       dest: "power_check.sh"
   
   - name: Run the script 
-    ansible.builtin.script: 
-      cmd ./power_check.sh
+    ansible.builtin.script: ./power_check.sh
   
   - name: "Read a file content"
     shell: |
