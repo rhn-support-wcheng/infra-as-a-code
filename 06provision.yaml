@@ -33,7 +33,7 @@
       content: |
          curl -v --insecure --silent \
          -X GET -L \
-         -u $SAT_USER:$SAT_PASS \
+         -u {{ SAT_USER }}:{{ SAT_PASS }} \
          -H 'Content-Type: application/json' \
          --data '{}' \
          https://satellite.tingnkai.com/api/v2/discovered_hosts \
