@@ -1,0 +1,46 @@
+---
+- name: "Playing with Ansible and Git"
+  hosts: localhost
+  connection: local 
+  gather_facts: no
+
+  tasks:
+  - name: create data.json
+    copy:
+      content: |
+        {  
+          "UserName": '{{ ansible_user }}', 
+          "Password": '{{ ansible_password }}' 
+        }
+      dest: data.json
+
+  - name: Copy script content to 
+    copy:
+      content: |
+        #!/bin/bash
+        #
+        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://{{ ilo_ip }}/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+        echo $xauthtoken
+
+        curl -v --insecure --silent \
+        -X GET \
+        -H 'X-Auth-Token: '$xauthtoken \
+        -L \
+        https://{{ ilo_ip }}/redfish/v1/Systems/1 \
+        > power_check.json
+      dest: "power_check.sh"
+  
+  - name: Run the script 
+    ansible.builtin.script: ./power_check.sh
+   
+  - name: Display the JSON file content
+    shell: cat power_check.json
+    register: result
+
+  - name: save the Json data to a Variable as a Fact
+    set_fact:
+      jsondata: "{{ result.stdout | from_json }}"
+
+  - name: Print the msg
+    debug:
+      msg: "{{ jsondata.PowerState }}"
