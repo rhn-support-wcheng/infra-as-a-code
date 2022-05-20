@@ -28,7 +28,7 @@
         -H 'Content-Type: application/json' \
         --data '{ "ResetType": "On" }' \
         https://{{ ilo_ip }}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset \
-        > $power_on.json
+        > power_on.json
 
       dest: "power_on.sh"
   
