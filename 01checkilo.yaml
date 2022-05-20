@@ -9,8 +9,8 @@
     copy:
       content: |
         {  
-          "UserName": "admin", 
-          "Password": "redhat123" 
+          "UserName": '{{ ansible_user }}', 
+          "Password": '{{ ansible_password }}' 
         }
       dest: data.json
 
