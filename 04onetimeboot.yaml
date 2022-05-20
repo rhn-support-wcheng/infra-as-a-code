@@ -37,7 +37,7 @@
         }' \
         https://bmc1/redfish/v1/Systems/1 \
         > onetimeboot.json
-    dest: "onetimeboot.sh"    
+      dest: "onetimeboot.sh"    
       
   - name: Display the JSON file content
     shell: cat onetimeboot.json
