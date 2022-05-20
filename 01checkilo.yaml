@@ -36,5 +36,5 @@
    
   - name: "Print the file content to a console"
     debug:
-      msg: "{{ file_content.stdout }}"
+      msg: "{{ file_content.stdout | from_json }}"
     
