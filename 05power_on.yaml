@@ -42,7 +42,3 @@
   - name: save the Json data to a Variable as a Fact
     set_fact:
       jsondata: "{{ result.stdout | from_json }}"
-
-  - name: Print the msg
-    debug:
-      msg: "{{ jsondata.PowerState }}"
