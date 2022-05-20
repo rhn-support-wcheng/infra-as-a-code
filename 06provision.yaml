@@ -1,0 +1,69 @@
+
+---
+- name: "Provision"
+  hosts: localhost
+  connection: local 
+  gather_facts: no
+
+  tasks:
+  - name: create data.json
+    copy:
+      content: |
+        {  
+          "UserName": '{{ ansible_user }}', 
+          "Password": '{{ ansible_password }}' 
+        }
+      dest: data.json
+
+  - name: create data.json
+    copy:
+      content: |
+        {
+           "discovered_host": {
+           "hostgroup_id": "7",
+           "location_id":"2",
+           "organization_id":"1",
+           "build":"true"
+           }
+        }
+
+
+  - name: Copy script content to 
+    copy:
+      content: |
+         curl -v --insecure --silent \
+         -X GET -L \
+         -u $SAT_USER:$SAT_PASS \
+         -H 'Content-Type: application/json' \
+         --data '{}' \
+         https://satellite.tingnkai.com/api/v2/discovered_hosts \
+         > provision.json
+
+         #get the host id
+         id=$(cat provision.json | jq . | grep \"id\" | awk '{print $2}')
+         echo $id
+
+         curl -v --insecure --silent \
+         -X PUT -L \
+         -u $SAT_USER:$SAT_PASS \
+         -H 'Content-Type: application/json' \
+         --data @sat_host.json \
+         https://satellite.tingnkai.com/api/v2/discovered_hosts/$id \
+         >> provision.json
+
+      dest: "provision.sh"
+  
+  - name: Run the script 
+    ansible.builtin.script: ./provision.sh
+   
+  - name: Display the JSON file content
+    shell: cat provision.json
+    register: result
+
+  - name: save the Json data to a Variable as a Fact
+    set_fact:
+      jsondata: "{{ result.stdout | from_json }}"
+
+  - name: Print the msg
+    debug:
+      msg: "{{ jsondata.PowerState }}"
