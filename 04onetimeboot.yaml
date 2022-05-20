@@ -20,26 +20,26 @@
         #!/bin/bash
         #
 
-      xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://bmc1/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
-      echo $xauthtoken
+        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://bmc1/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+        echo $xauthtoken
 
-      curl -v --insecure --silent \
-      -X PATCH -L \
-      -H 'Content-Type: application/json' \
-      -H 'X-Auth-Token: '$xauthtoken \
-      --data '
-      {
-        "Boot": {
-           "BootSourceOverrideTarget": "Cd", 
-           "BootSourceOverrideEnabled": "Once", 
-           "UefiTargetBootSourceOverride": null
-        }
-      }' \
-      https://bmc1/redfish/v1/Systems/1 \
-      > onetimeboot.json
+        curl -v --insecure --silent \
+        -X PATCH -L \
+        -H 'Content-Type: application/json' \
+        -H 'X-Auth-Token: '$xauthtoken \
+        --data '
+        {
+          "Boot": {
+                   "BootSourceOverrideTarget": "Cd", 
+                   "BootSourceOverrideEnabled": "Once", 
+                   "UefiTargetBootSourceOverride": null
+                  }
+        }' \
+        https://bmc1/redfish/v1/Systems/1 \
+        > onetimeboot.json
   
   - name: Display the JSON file content
-    shell: cat power_check.json
+    shell: cat onetimeboot.json
     register: result
   
   - name: save the Json data to a Variable as a Fact
