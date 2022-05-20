@@ -40,4 +40,4 @@
     
   - name: debug fact
     debug:
-      msg: "{{ dataresult.data[0].PowerState }}"
+      msg: "{{ dataresult.msg.data[0].PowerState }}"
