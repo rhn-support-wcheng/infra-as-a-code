@@ -19,14 +19,14 @@
       content: |
         #!/bin/bash
         #
-        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://192.168.155.9/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://{{ ilo_ip }}/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
         echo $xauthtoken
 
         curl -v --insecure --silent \
         -X GET \
         -H 'X-Auth-Token: '$xauthtoken \
         -L \
-        https://192.168.155.9/redfish/v1/Systems/1 \
+        https://{{ ilo_ip }}/redfish/v1/Systems/1 \
         > power_check.json
       dest: "power_check.sh"
   
