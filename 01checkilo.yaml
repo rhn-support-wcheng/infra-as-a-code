@@ -23,7 +23,7 @@
   
   - name: Run the script 
     ansible.builtin.script: ./power_check.sh
-   register: file_content
+    register: file_content
    
   - name: "Print the file content to a console"
     debug:
