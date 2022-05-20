@@ -43,4 +43,4 @@
 
   - name: Print the msg
     debug:
-      msg: "{{ jsondata.data[0].PowerState }}"
+      msg: "{{ jsondata.PowerState }}"
