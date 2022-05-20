@@ -13,7 +13,7 @@
           "Password": '{{ ansible_password }}' 
         }
       dest: data.json
-
+      
   - name: Copy script content to 
     copy:
       content: |
