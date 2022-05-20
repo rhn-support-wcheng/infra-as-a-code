@@ -39,6 +39,9 @@
         > onetimeboot.json
       dest: "onetimeboot.sh"    
       
+  - name: Run the script 
+    ansible.builtin.script: ./onetimeboot.sh 
+      
   - name: Display the JSON file content
     shell: cat onetimeboot.json
     register: result
