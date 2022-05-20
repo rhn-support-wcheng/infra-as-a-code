@@ -27,7 +27,7 @@
         -H 'X-Auth-Token: '$xauthtoken \
         -H 'Content-Type: application/json' \
         --data '{ "ResetType": "On" }' \
-        https://bmc1/redfish/v1/Systems/1/Actions/ComputerSystem.Reset \
+        https://{{ ilo_ip }}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset \
         > $power_on.json
 
       dest: "power_on.sh"
