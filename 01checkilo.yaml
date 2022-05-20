@@ -1,0 +1,16 @@
+---
+- name: "Playing with Ansible and Git"
+  hosts: localhost
+  connection: local 
+
+  tasks:
+  - name: Check iLO status
+    uri:
+      url: https://192.168.155.9/redfish/v1/SessionService/Sessions/
+      method: GET
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+    register: "output"
+    
+  - debug: var=output.stdout_lines
