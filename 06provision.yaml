@@ -26,7 +26,7 @@
            "build":"true"
            }
         }
-
+      dest: sat_host.json
 
   - name: Copy script content to 
     copy:
