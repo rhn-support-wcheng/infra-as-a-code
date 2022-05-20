@@ -16,7 +16,7 @@
               "UserName": "admin", 
               "Password": "redhat123"
         }
-    dest: "data.json"
+      dest: "data.json"
 
   - name: Create a new file with permissions
     file:
