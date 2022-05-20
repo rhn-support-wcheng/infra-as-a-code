@@ -2,7 +2,7 @@
 - name: "Playing with Ansible and Git"
   hosts: localhost
   connection: local 
-  gather_fact: no
+  gather_facts: no
 
   tasks:
   - name: Copy script content to 
