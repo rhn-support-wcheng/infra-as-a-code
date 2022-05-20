@@ -20,7 +20,7 @@
         #!/bin/bash
         #
 
-        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://bmc1/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://{{ ilo_ip }}/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
         echo $xauthtoken
 
         curl -v --insecure --silent \
@@ -35,7 +35,7 @@
                    "UefiTargetBootSourceOverride": null
                   }
         }' \
-        https://bmc1/redfish/v1/Systems/1 \
+        https://{{ ilo_ip }}/redfish/v1/Systems/1 \
         > onetimeboot.json
       dest: "onetimeboot.sh"    
       
