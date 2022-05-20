@@ -19,7 +19,7 @@
       content: |
         #!/bin/bash
         
-        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://bmc1/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
+        xauthtoken=$(curl -i -H "Content-Type: application/json" -H "OData-Version: 4.0" -X POST --data "@data.json" https://{{ ilo_ip }}/redfish/v1/SessionService/Sessions/ --insecure  | grep X\-Auth\-Token | awk '{print $2}')
         echo $xauthtoken
 
         curl -v --insecure --silent \
@@ -27,13 +27,13 @@
         -H 'X-Auth-Token: '$xauthtoken \
         -H 'Content-Type: application/json' \
         --data '{ "ResetType": "ForceOff" }' \
-        https://bmc1/redfish/v1/Systems/1/Actions/ComputerSystem.Reset \
+        https://{{ ilo_ip }}/redfish/v1/Systems/1/Actions/ComputerSystem.Reset \
         > power_off.json
 
-      dest: "power_check.sh"
+      dest: "power_off.sh"
   
   - name: Run the script 
-    ansible.builtin.script: ./power_check.sh
+    ansible.builtin.script: ./power_off.sh
    
   - name: Display the JSON file content
     shell: cat power_off.json
