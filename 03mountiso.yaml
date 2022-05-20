@@ -9,6 +9,6 @@
     ansible.builtin.expect:
       command: ssh {{ ansible_user }}@{{ ilo_ip }} vm cdrom insert http://192.168.155.98:8082/v1/AUTH_S3/S3/foreman-discovery-image-3.8.0-1.iso
       responses:
+        (?i)SSH password: '{{ ansible_password }}'
         (?i)Are you sure you want to continue connecting (yes/no/[fingerprint])?: yes
-        (?i)SSH password: '{{ ansible_password }}' 
 #    no_log: true
