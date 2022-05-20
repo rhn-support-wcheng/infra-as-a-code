@@ -6,16 +6,7 @@
   gather_facts: no
 
   tasks:
-  - name: create data.json
-    copy:
-      content: |
-        {  
-          "UserName": '{{ ansible_user }}', 
-          "Password": '{{ ansible_password }}' 
-        }
-      dest: data.json
-
-  - name: create data.json
+  - name: create sat_host.json
     copy:
       content: |
         {
@@ -50,7 +41,6 @@
          --data @sat_host.json \
          https://satellite.tingnkai.com/api/v2/discovered_hosts/$id \
          >> provision.json
-
       dest: "provision.sh"
   
   - name: Run the script 
@@ -59,7 +49,3 @@
   - name: Display the JSON file content
     shell: cat provision.json
     register: result
-
-  - name: save the Json data to a Variable as a Fact
-    set_fact:
-      jsondata: "{{ result.stdout | from_json }}"
