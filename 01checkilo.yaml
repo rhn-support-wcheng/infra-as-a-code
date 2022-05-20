@@ -12,9 +12,9 @@
   - name: copy username and password to  data.json
     copy:
       content: |
-        {
-    	      "UserName": "admin", 
-    	      "Password": "redhat123"
+        { 
+              "UserName": "admin", 
+              "Password": "redhat123"
         }
     dest: data.json
 
