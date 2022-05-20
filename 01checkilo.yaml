@@ -35,9 +35,5 @@
     register: file_content
    
   - name: "Print the file content to a console"
-    set_fact:
-      dataresult: "{{ file_content.stdout | from_json }}"
-    
-  - name: debug fact
     debug:
-      msg: "{{ dataresult.msg.data[0].PowerState }}"
+      msg: "{{ file_content.stdout | from_json }}"
