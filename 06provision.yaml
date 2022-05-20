@@ -24,7 +24,7 @@
       content: |
          curl -v --insecure --silent \
          -X GET -L \
-         -u {{ SAT_USER }}:{{ SAT_PASS }} \
+         -u {{ lookup("env", "SATELLITE_USERNAME") }}:{{ lookup("env", "SATELLITE_PASSWORD") }} \
          -H 'Content-Type: application/json' \
          --data '{}' \
          https://satellite.tingnkai.com/api/v2/discovered_hosts \
@@ -36,7 +36,7 @@
 
          curl -v --insecure --silent \
          -X PUT -L \
-         -u {{ SAT_USER }}:{{ SAT_PASS }} \
+         -u {{ lookup("env", "SATELLITE_USERNAME") }}:{{ lookup("env", "SATELLITE_PASSWORD") }} \
          -H 'Content-Type: application/json' \
          --data @sat_host.json \
          https://satellite.tingnkai.com/api/v2/discovered_hosts/$id \
