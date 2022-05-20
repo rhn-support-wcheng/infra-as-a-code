@@ -8,9 +8,9 @@
   - name: create data.json
     copy:
       content: |
-        {
+        {  
           "UserName": "admin", 
-    	    "Password": "redhat123" 
+          "Password": "redhat123" 
         }
       dest: data.json
 
