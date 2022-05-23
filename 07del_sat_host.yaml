@@ -14,7 +14,8 @@
          -u {{ ansible_user }}':{{ ansible_password }}' \
          -H 'Content-Type: application/json' \
          --data '{}' \
-         https://satellite.tingnkai.com/api/v2/hosts
+         https://satellite.tingnkai.com/api/v2/hosts \
+         > sat_host.json
       dest: "get_sat_host.sh"
   
   - name: Run the script 
