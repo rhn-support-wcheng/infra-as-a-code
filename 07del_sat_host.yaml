@@ -16,6 +16,20 @@
          --data '{}' \
          https://satellite.tingnkai.com/api/v2/hosts \
          > sat_host.json
+         
+         > get host id
+         #get the host id
+         id=$(cat sat_host.json | grep -oP '\"192.168.155.9\".{0,2000}' | grep -oP '"content_facet_attributes".{0,10}' | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
+         echo $id
+         
+         curl -v --insecure --silent \
+         -X GET -L \
+         -u {{ ansible_user }}':{{ ansible_password }}' \
+         -H 'Content-Type: application/json' \
+         --data '{}' \
+         https://satellite.tingnkai.com/api/v2/hosts:$id \
+         > sat_host.json
+         
       dest: "get_sat_host.sh"
   
   - name: Run the script 
