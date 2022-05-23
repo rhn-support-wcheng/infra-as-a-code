@@ -22,9 +22,9 @@
          id=$(cat sat_host.json | grep -oP '\"192.168.155.9\".{0,1500}' | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
          echo $id
          
-         curl -X GET -L -v --insecure --silent -u {{ ansible_user }}:{{ ansible_password }} https://satellite.tingnkai.com/api/v2/hosts/$id 
+         curl  -X DELETE  -L -v --insecure --silent -u {{ ansible_user }}:{{ ansible_password }} https://satellite.tingnkai.com/api/v2/hosts/$id 
          
-      dest: "get_sat_host.sh"
+      dest: "del_sat_host.sh"
   
   - name: Run the script 
-    ansible.builtin.script: ./get_sat_host.sh
+    ansible.builtin.script: ./del_sat_host.sh
