@@ -11,7 +11,7 @@
       content: |
          curl -v --insecure --silent \
          -X GET -L \
-         -u admin:redhat \
+         -u {{ ansible_user }}':{{ ansible_pass }}' \
          -H 'Content-Type: application/json' \
          --data '{}' \
          https://satellite.tingnkai.com/api/v2/hosts
