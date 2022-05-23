@@ -1,0 +1,21 @@
+
+---
+- name: "Get satellite Host"
+  hosts: localhost
+  connection: local 
+  gather_facts: no
+
+  tasks:
+  - name: Copy script content to 
+    copy:
+      content: |
+         curl -v --insecure --silent \
+         -X GET -L \
+         -u admin:redhat \
+         -H 'Content-Type: application/json' \
+         --data '{}' \
+         https://satellite.tingnkai.com/api/v2/hosts
+      dest: "get_sat_host.sh"
+  
+  - name: Run the script 
+    ansible.builtin.script: ./get_sat_host.sh
