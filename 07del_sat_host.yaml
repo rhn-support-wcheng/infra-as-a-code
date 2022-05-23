@@ -1,6 +1,6 @@
 
 ---
-- name: "Get satellite Host"
+- name: "Delete satellite Host"
   hosts: localhost
   connection: local 
   gather_facts: no
