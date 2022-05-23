@@ -22,7 +22,7 @@
          id=$(cat sat_host.json | grep -oP '\"192.168.155.9\".{0,2000}' | grep -oP '"content_facet_attributes".{0,10}' | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
          echo $id
          
-         curl -X GET -s -k -u {{ ansible_user }}:{{ ansible_password }} https://satellite.tingnkai.com/api/v2/hosts/$id | json_reformat
+         curl -X GET -v --insecure --silent -u {{ ansible_user }}:{{ ansible_password }} https://satellite.tingnkai.com/api/v2/hosts/$id | json_reformat
          
       dest: "get_sat_host.sh"
   
