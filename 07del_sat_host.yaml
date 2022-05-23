@@ -19,10 +19,10 @@
          
          > get host id
          #get the host id
-         id=$(cat sat_host.json | grep -oP '\"192.168.155.9\".{0,1500}' | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
+         id=$(cat sat_host.json | grep -oP '\"{{ ilo_ip }}\".{0,1500}' | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
          echo $id
          
-         curl  -X DELETE  -L -v --insecure --silent -u {{ ansible_user }}:{{ ansible_password }} https://satellite.tingnkai.com/api/v2/hosts/$id 
+         #curl  -X DELETE  -L -v --insecure --silent -u {{ ansible_user }}:{{ ansible_password }} https://satellite.tingnkai.com/api/v2/hosts/$id 
          
       dest: "del_sat_host.sh"
   
