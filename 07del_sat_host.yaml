@@ -17,7 +17,6 @@
          https://satellite.tingnkai.com/api/v2/hosts \
          > sat_host.json
          
-         > get host id
          #get the host id
          id=$(cat sat_host.json | grep -oP '\"{{ ilo_ip }}\".{0,1500}' | grep -oP '"\id\":.{0,3}' | cut -d ':' -f 2)
          echo $id
