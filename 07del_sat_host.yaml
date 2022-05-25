@@ -29,5 +29,5 @@
     ansible.builtin.script: ./del_sat_host.sh
     
   - name: Display the JSON file content
-    shell: sat_host.json
+    shell: cat sat_host.json
     register: result
