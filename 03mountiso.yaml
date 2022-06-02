@@ -11,4 +11,4 @@
       responses:
         (?i)Are you sure you want to continue connecting (yes/no/[fingerprint])?: "yes"
         (?i)admin@192.168.155.9\'s password: '{{ ansible_password }}'
-    no_log: true
+    #no_log: true
